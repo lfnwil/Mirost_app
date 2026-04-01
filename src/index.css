@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+html {
+  width: 100vw;
+  height: auto;
+  overflow-y: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+body,
+#root,
+#container {
+  width: 100vw;
+  height: 100%;
+}
