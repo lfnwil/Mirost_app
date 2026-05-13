@@ -434,7 +434,9 @@ export default function StudentProfileCreatePage() {
                     key={domainOption.label}
                     type="button"
                     aria-pressed={isSelected}
-                    className={`flex min-h-12 items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-left text-sm font-medium transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${buttonClassName}`}
+                    className={`flex min-h-12 items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-left text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
+                      isSelected ? buttonClassName : `${buttonClassName} hover:bg-white`
+                    }`}
                     onClick={() => handleDomainSelect(domainOption.label)}
                     disabled={isSaving}
                   >

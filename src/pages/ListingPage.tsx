@@ -310,7 +310,9 @@ export default function ListingPage() {
                         key={domainOption.label}
                         type="button"
                         aria-pressed={isSelected}
-                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${buttonClassName}`}
+                        className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
+                          isSelected ? buttonClassName : `${buttonClassName} hover:bg-white`
+                        }`}
                         onClick={() => handleDomainFilterSelect(domainOption.label)}
                       >
                         <span
