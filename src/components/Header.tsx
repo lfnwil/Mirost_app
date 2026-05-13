@@ -9,8 +9,9 @@ const navLinkClassName = ({ isActive }: { isActive: boolean }) =>
     isActive ? 'bg-slate-950 text-white' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
   }`
 
-const brandIconUrl = `${import.meta.env.BASE_URL}brand/mirost-icon.svg`
-const brandWordmarkUrl = `${import.meta.env.BASE_URL}brand/mirost-wordmark.svg`
+const brandAssetVersion = '20260513-provided-svg'
+const brandIconUrl = `${import.meta.env.BASE_URL}brand/mirost-icon.svg?v=${brandAssetVersion}`
+const brandWordmarkUrl = `${import.meta.env.BASE_URL}brand/mirost-wordmark.svg?v=${brandAssetVersion}`
 
 export default function Header() {
   const session = useAuthStore((state) => state.session)
@@ -75,9 +76,22 @@ export default function Header() {
     <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <Link to={session ? '/listing' : '/'} className="flex items-center gap-3">
-          <img src={brandIconUrl} alt="" className="h-11 w-11 shrink-0 object-contain" aria-hidden="true" />
+          <img
+            src={brandIconUrl}
+            alt=""
+            width={128}
+            height={127}
+            className="h-11 w-11 max-w-none shrink-0 object-contain"
+            aria-hidden="true"
+          />
           <div>
-            <img src={brandWordmarkUrl} alt="MIROST" className="h-7 w-auto max-w-[9.5rem] object-contain" />
+            <img
+              src={brandWordmarkUrl}
+              alt="MIROST"
+              width={547}
+              height={128}
+              className="h-7 w-auto max-w-none object-contain"
+            />
             <p className="text-sm text-slate-500">Talents créatifs, missions courtes</p>
           </div>
         </Link>
