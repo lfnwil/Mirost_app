@@ -1,12 +1,30 @@
 <svg width="547" height="128" viewBox="0 0 547 128" fill="none" xmlns="http://www.w3.org/2000/svg">
   <title>MIROST</title>
-  <text
-    x="0"
-    y="99"
-    fill="#242424"
-    font-family="Arial Black, Arial, Helvetica, sans-serif"
-    font-size="104"
-    font-weight="900"
-    letter-spacing="4"
-  >MIROST</text>
+  <g fill="#242424">
+    <text
+      x="-6"
+      y="105"
+      font-family="Arial Black, Arial, Helvetica, sans-serif"
+      font-size="104"
+      font-weight="900"
+      letter-spacing="9"
+    >MIR</text>
+    <text
+      x="389"
+      y="105"
+      font-family="Arial Black, Arial, Helvetica, sans-serif"
+      font-size="104"
+      font-weight="900"
+      letter-spacing="9"
+    >ST</text>
+  </g>
+  <g transform="translate(257 6) scale(0.228)" fill="#242424" stroke="#242424">
+    <circle cx="256" cy="256" r="69" stroke="none"/>
+    <path d="M125 90C188 58 273 59 338 101" fill="none" stroke-width="54" stroke-linecap="round"/>
+    <path d="M366 85L512 0L447 158L394 132L335 153L366 85Z" stroke="none"/>
+    <path d="M423 160C454 225 456 291 429 358" fill="none" stroke-width="54" stroke-linecap="round"/>
+    <path d="M366 422C302 455 216 454 151 412" fill="none" stroke-width="54" stroke-linecap="round"/>
+    <path d="M146 371L0 512L73 334L119 371L178 352L146 371Z" stroke="none"/>
+    <path d="M83 327C54 263 53 207 78 141" fill="none" stroke-width="54" stroke-linecap="round"/>
+  </g>
 </svg>

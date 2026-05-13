@@ -77,7 +77,7 @@ export default function Header() {
         <Link to={session ? '/listing' : '/'} className="flex items-center gap-3">
           <img src={brandIconUrl} alt="" className="h-11 w-11 shrink-0 object-contain" aria-hidden="true" />
           <div>
-            <img src={brandWordmarkUrl} alt="MIROST" className="h-6 w-auto max-w-[8.5rem] object-contain" />
+            <img src={brandWordmarkUrl} alt="MIROST" className="h-7 w-auto max-w-[9.5rem] object-contain" />
             <p className="text-sm text-slate-500">Talents créatifs, missions courtes</p>
           </div>
         </Link>
