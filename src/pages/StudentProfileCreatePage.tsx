@@ -207,7 +207,7 @@ export default function StudentProfileCreatePage() {
     name: session.displayName,
     title: formState.title || 'Votre formation',
     bio: formState.bio || 'Votre présentation apparaîtra ici pour aider les entreprises à comprendre votre univers.',
-    tags: previewTags.length > 0 ? previewTags : ['Design', 'Audiovisuel'],
+    tags: previewTags,
     avatarUrl: session.photoURL,
     location: formState.location || 'Votre ville',
     availability: formState.availability,

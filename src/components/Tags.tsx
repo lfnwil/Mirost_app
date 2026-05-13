@@ -10,6 +10,14 @@ const tagStyles = [
 ]
 
 export default function Tags({ tags }: TagsProps) {
+  if (tags.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-500">
+        Aucune compétence sélectionnée
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-wrap gap-2">
       {tags.map((tag, index) => (
