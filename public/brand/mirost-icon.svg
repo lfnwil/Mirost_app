@@ -1,0 +1,10 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>MIROST</title>
+  <circle cx="256" cy="256" r="69" fill="#242424"/>
+  <path d="M125 90C188 58 273 59 338 101" stroke="#242424" stroke-width="54" stroke-linecap="round"/>
+  <path d="M366 85L512 0L447 158L394 132L335 153L366 85Z" fill="#242424"/>
+  <path d="M423 160C454 225 456 291 429 358" stroke="#242424" stroke-width="54" stroke-linecap="round"/>
+  <path d="M366 422C302 455 216 454 151 412" stroke="#242424" stroke-width="54" stroke-linecap="round"/>
+  <path d="M146 371L0 512L73 334L119 371L178 352L146 371Z" fill="#242424"/>
+  <path d="M83 327C54 263 53 207 78 141" stroke="#242424" stroke-width="54" stroke-linecap="round"/>
+</svg>

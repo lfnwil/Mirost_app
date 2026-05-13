@@ -9,6 +9,9 @@ const navLinkClassName = ({ isActive }: { isActive: boolean }) =>
     isActive ? 'bg-slate-950 text-white' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
   }`
 
+const brandIconUrl = `${import.meta.env.BASE_URL}brand/mirost-icon.svg`
+const brandWordmarkUrl = `${import.meta.env.BASE_URL}brand/mirost-wordmark.svg`
+
 export default function Header() {
   const session = useAuthStore((state) => state.session)
   const openAuthModal = useAuthStore((state) => state.openAuthModal)
@@ -72,11 +75,9 @@ export default function Header() {
     <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <Link to={session ? '/listing' : '/'} className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-lg font-semibold text-white shadow-sm">
-            M
-          </div>
+          <img src={brandIconUrl} alt="" className="h-11 w-11 shrink-0 object-contain" aria-hidden="true" />
           <div>
-            <p className="text-lg font-semibold tracking-tight text-slate-900">MIROST</p>
+            <img src={brandWordmarkUrl} alt="MIROST" className="h-6 w-auto max-w-[8.5rem] object-contain" />
             <p className="text-sm text-slate-500">Talents créatifs, missions courtes</p>
           </div>
         </Link>
@@ -171,7 +172,13 @@ export default function Header() {
               >
                 <FiEdit3 className="h-4 w-4 shrink-0" />
                 <div>
-                  <p>{session.role === 'student' && !session.hasStudentProfile ? 'Compléter mon profil' : 'Modifier mon profil'}</p>
+                  <p>
+                    {session.role === 'student'
+                      ? session.hasStudentProfile
+                        ? 'Modifier mon profil'
+                        : 'Compléter mon profil'
+                      : 'Votre espace'}
+                  </p>
                   <p className="mt-1 text-xs font-normal text-slate-500">
                     {session.role === 'student'
                       ? 'Mettre à jour votre carte publique, vos créations et vos disponibilités.'

@@ -183,9 +183,10 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
     setIsSubmittingContact(true)
 
     try {
-      await submitProfileContactRequest(currentProfile, contactFormState)
+      await submitProfileContactRequest(currentProfile, contactFormState, session)
       setContactFormState(buildContactFormStateFromSession(session))
-      setContactSuccessMessage('Votre demande de contact a bien été envoyée.')
+      setIsContactFormOpen(false)
+      setContactSuccessMessage('Votre demande a bien été envoyée. Elle est disponible dans votre espace entreprise.')
     } catch (error) {
       setContactErrorMessage(error instanceof Error ? error.message : 'Impossible d’envoyer votre demande pour le moment.')
     } finally {
@@ -455,6 +456,13 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
               )}
             </div>
 
+            {contactSuccessMessage && (
+              <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                <p className="font-semibold">Demande envoyée</p>
+                <p className="mt-1">{contactSuccessMessage}</p>
+              </div>
+            )}
+
             {isClientSession && isContactFormOpen && (
               <form
                 ref={contactFormRef}
@@ -546,12 +554,6 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                 {contactErrorMessage && (
                   <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
                     {contactErrorMessage}
-                  </div>
-                )}
-
-                {contactSuccessMessage && (
-                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-                    {contactSuccessMessage}
                   </div>
                 )}
 

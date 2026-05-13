@@ -21,6 +21,11 @@ import {
   type DemoStoredUser,
 } from './demoStorage'
 
+export interface ClientAccountInput {
+  displayName: string
+  organisation: string
+}
+
 function getFallbackDisplayName(email: string) {
   return email.split('@')[0] || 'Utilisateur MIROST'
 }
@@ -258,4 +263,50 @@ export async function signOutCurrentUser() {
   }
 
   setDemoCurrentUserId(null)
+}
+
+export async function updateClientAccount(session: AppSession, input: ClientAccountInput): Promise<AppSession> {
+  if (session.role !== 'client') {
+    throw new Error('Cet espace est réservé aux comptes entreprise.')
+  }
+
+  const displayName = input.displayName.trim() || getFallbackDisplayName(session.email)
+  const organisation = input.organisation.trim()
+  const updatedSession: AppSession = {
+    ...session,
+    displayName,
+    organisation,
+  }
+
+  if (isFirebaseConfigured) {
+    if (auth.currentUser?.uid === session.uid) {
+      await updateProfile(auth.currentUser, { displayName })
+    }
+
+    await setDoc(
+      doc(db, 'users', session.uid),
+      {
+        displayName,
+        organisation,
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true }
+    )
+
+    return updatedSession
+  }
+
+  setDemoUsers(
+    getDemoUsers().map((user) =>
+      user.uid === session.uid
+        ? {
+            ...user,
+            displayName,
+            organisation,
+          }
+        : user
+    )
+  )
+
+  return updatedSession
 }

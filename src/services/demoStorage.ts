@@ -24,6 +24,8 @@ export interface DemoStoredContactRequest {
   profileId: string
   profileName: string
   profileDomain: string
+  senderUserId?: string
+  senderRole?: UserRole
   senderName: string
   senderEmail: string
   organisation: string
