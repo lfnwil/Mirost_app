@@ -1,12 +1,19 @@
 import { type FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import RequiredMark from '@/components/RequiredMark'
+import {
+  DEFAULT_ORGANISATION_TYPE,
+  ORGANISATION_TYPE_OPTIONS,
+  shouldCollectOrganisationName,
+  type OrganisationType,
+} from '@/data/organisationTypes'
 import { signInWithEmail, signUpWithEmail } from '@/services/authService'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { getRoleAccentTheme, roleAccentThemes } from '@/utils/roleTheme'
 
 interface AuthFormState {
   displayName: string
+  organisationType: OrganisationType
   organisation: string
   email: string
   password: string
@@ -14,6 +21,7 @@ interface AuthFormState {
 
 const initialFormState: AuthFormState = {
   displayName: '',
+  organisationType: DEFAULT_ORGANISATION_TYPE,
   organisation: '',
   email: '',
   password: '',
@@ -90,6 +98,7 @@ export default function AuthModal() {
             })
           : await signUpWithEmail({
               displayName: formState.displayName,
+              organisationType: formState.organisationType,
               organisation: formState.organisation,
               email: formState.email,
               password: formState.password,
@@ -215,22 +224,56 @@ export default function AuthModal() {
           )}
 
           {authModal.mode === 'signup' && authModal.role === 'client' && (
-            <label className="block space-y-2">
-              <span className="text-sm font-medium text-slate-700">Organisation</span>
-              <input
-                type="text"
-                value={formState.organisation}
-                onChange={(event) =>
-                  setFormState((current) => ({
-                    ...current,
-                    organisation: event.target.value,
-                  }))
-                }
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white"
-                placeholder="Entreprise, association, collectif..."
-                autoComplete="organization"
-              />
-            </label>
+            <div className="grid gap-5 md:grid-cols-2">
+              <label className="block space-y-2">
+                <span className="text-sm font-medium text-slate-700">
+                  Type d’organisation
+                  <RequiredMark />
+                </span>
+                <select
+                  value={formState.organisationType}
+                  onChange={(event) => {
+                    const organisationType = event.target.value as OrganisationType
+                    setFormState((current) => ({
+                      ...current,
+                      organisationType,
+                      organisation: shouldCollectOrganisationName(organisationType) ? current.organisation : '',
+                    }))
+                  }}
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white"
+                  required
+                >
+                  {ORGANISATION_TYPE_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              {shouldCollectOrganisationName(formState.organisationType) && (
+                <label className="block space-y-2">
+                  <span className="text-sm font-medium text-slate-700">
+                    Nom de l’organisation
+                    <RequiredMark />
+                  </span>
+                  <input
+                    type="text"
+                    value={formState.organisation}
+                    onChange={(event) =>
+                      setFormState((current) => ({
+                        ...current,
+                        organisation: event.target.value,
+                      }))
+                    }
+                    className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white"
+                    placeholder="Exemple : Studio Nova"
+                    autoComplete="organization"
+                    required
+                  />
+                </label>
+              )}
+            </div>
           )}
 
           <div className="grid gap-5 md:grid-cols-2">

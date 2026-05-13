@@ -1,3 +1,4 @@
+import type { OrganisationType } from '@/data/organisationTypes'
 import type { UserRole } from '@/types/auth'
 import type { StudentProfileInput } from '@/types/profile'
 
@@ -6,6 +7,7 @@ export interface DemoStoredUser {
   email: string
   password: string
   displayName: string
+  organisationType?: OrganisationType
   organisation?: string
   role: UserRole
   photoURL: string | null

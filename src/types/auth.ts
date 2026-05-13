@@ -1,3 +1,5 @@
+import type { OrganisationType } from '@/data/organisationTypes'
+
 export type UserRole = 'client' | 'student'
 export type AuthStatus = 'loading' | 'guest' | 'authenticated'
 export type AuthFormMode = 'login' | 'signup'
@@ -7,6 +9,7 @@ export interface AppSession {
   uid: string
   email: string
   displayName: string
+  organisationType: OrganisationType
   organisation: string
   role: UserRole
   hasStudentProfile: boolean
@@ -22,5 +25,6 @@ export interface SignInInput {
 
 export interface SignUpInput extends SignInInput {
   displayName: string
+  organisationType?: OrganisationType
   organisation?: string
 }

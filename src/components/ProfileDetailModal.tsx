@@ -21,6 +21,7 @@ import { submitProfileContactRequest } from '@/services/contactService'
 import { useAuthStore } from '@/stores/useAuthStore'
 import type { AppSession } from '@/types/auth'
 import type { Profile } from '@/types/profile'
+import { getOrganisationDisplayName } from '@/data/organisationTypes'
 import { formatFileSize } from '@/utils/formatFileSize'
 import { getRoleAccentTheme } from '@/utils/roleTheme'
 import ProfileDomainBadge from './ProfileDomainBadge'
@@ -45,7 +46,8 @@ const initialContactFormState: ContactFormState = {
   senderEmail: '',
   organisation: '',
   projectType: '',
-  message: '',
+  message:
+    'Bonjour, nous avons découvert votre profil et votre univers créatif nous intéresse pour un projet à venir. Nous aimerions échanger avec vous afin de vous présenter le contexte, les attentes, les délais et les modalités de collaboration. Seriez-vous disponible prochainement pour un premier échange ?',
 }
 
 function buildContactFormStateFromSession(session: AppSession | null): ContactFormState {
@@ -56,9 +58,9 @@ function buildContactFormStateFromSession(session: AppSession | null): ContactFo
   return {
     senderName: session.displayName,
     senderEmail: session.email,
-    organisation: session.organisation,
+    organisation: getOrganisationDisplayName(session.organisationType, session.organisation),
     projectType: '',
-    message: '',
+    message: initialContactFormState.message,
   }
 }
 
@@ -549,7 +551,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                     value={contactFormState.message}
                     onChange={(event) => handleContactFieldChange('message', event.target.value)}
                     className="min-h-32 w-full rounded-[1.25rem] border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400"
-                    placeholder="Décrivez le besoin, les dates, le format attendu et toute information utile."
+                    placeholder={initialContactFormState.message}
                     disabled={isSubmittingContact}
                     required
                   />

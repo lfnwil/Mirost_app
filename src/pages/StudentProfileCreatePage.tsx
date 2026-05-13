@@ -52,11 +52,14 @@ function createInitialLinkFormState(): ProfileLinkFormState {
   return Object.fromEntries(profileLinkOptions.map((option) => [option.type, ''])) as ProfileLinkFormState
 }
 
+const defaultStudentBio =
+  "Je suis étudiant(e) en création et je développe un univers personnel autour de projets visuels, sonores ou digitaux. J'aime imaginer des contenus clairs, créatifs et adaptés aux besoins d'un projet, en portant une attention particulière à l'intention, au rendu et à la cohérence globale. Je suis disponible pour échanger avec des entreprises ou particuliers autour de missions qui me permettent de mettre mes compétences en pratique et de produire un résultat professionnel."
+
 const initialFormState: StudentProfileFormState = {
   title: '',
   location: '',
   availability: [],
-  bio: '',
+  bio: defaultStudentBio,
   tags: [],
   links: createInitialLinkFormState(),
 }
@@ -162,7 +165,7 @@ export default function StudentProfileCreatePage() {
             title: profileDomain,
             location: existingProfile.location,
             availability: normaliseProfileAvailabilities(existingProfile.availability),
-            bio: existingProfile.bio,
+            bio: existingProfile.bio.trim() || defaultStudentBio,
             tags: normaliseSelectedTagsForDomain(existingProfile.tags, profileDomain),
             links: buildLinkFormState(existingProfile.links),
           })
@@ -208,7 +211,7 @@ export default function StudentProfileCreatePage() {
     id: session.uid,
     name: session.displayName,
     title: formState.title || 'Votre formation',
-    bio: formState.bio || 'Votre présentation apparaîtra ici pour aider les entreprises à comprendre votre univers.',
+    bio: formState.bio || defaultStudentBio,
     tags: previewTags,
     avatarUrl: session.photoURL,
     location: formState.location || 'Votre ville',
@@ -453,6 +456,61 @@ export default function StudentProfileCreatePage() {
             </div>
           </section>
 
+          <section className="space-y-4 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <h2 className="text-sm font-semibold text-slate-900">
+                  Compétences créatives
+                  <RequiredMark />
+                </h2>
+                <p className="mt-1 text-xs leading-5 text-slate-500">
+                  Sélectionnez les compétences depuis la liste commune pour faciliter la recherche côté entreprise.
+                </p>
+              </div>
+              <span className="inline-flex w-fit rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600">
+                {selectedTagCount}/{MAX_PROFILE_TAGS} sélectionnées
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              {formState.title ? (
+                <div className="space-y-2">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    {formState.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedDomainTags.map((tag) => {
+                      const isSelected = formState.tags.includes(tag)
+                      const isDisabled = !isSelected && selectedTagCount >= MAX_PROFILE_TAGS
+
+                      return (
+                        <button
+                          key={tag}
+                          type="button"
+                          aria-pressed={isSelected}
+                          disabled={isDisabled || isSaving}
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
+                            isSelected
+                              ? accentTheme.selected
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-45'
+                          }`}
+                          onClick={() => handleTagToggle(tag)}
+                        >
+                          {isSelected && <FiCheck className="h-4 w-4" aria-hidden="true" />}
+                          {tag}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-4 py-5 text-sm text-slate-500">
+                  Sélectionnez d’abord une formation pour afficher les compétences associées.
+                </div>
+              )}
+            </div>
+          </section>
+
           <div className="grid gap-5 md:grid-cols-2">
             <label className="block space-y-2">
               <span className="text-sm font-medium text-slate-700">
@@ -516,61 +574,6 @@ export default function StudentProfileCreatePage() {
             </div>
           </section>
 
-          <section className="space-y-4 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <h2 className="text-sm font-semibold text-slate-900">
-                  Compétences créatives
-                  <RequiredMark />
-                </h2>
-                <p className="mt-1 text-xs leading-5 text-slate-500">
-                  Sélectionnez les compétences depuis la liste commune pour faciliter la recherche côté entreprise.
-                </p>
-              </div>
-              <span className="inline-flex w-fit rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600">
-                {selectedTagCount}/{MAX_PROFILE_TAGS} sélectionnées
-              </span>
-            </div>
-
-            <div className="space-y-4">
-              {formState.title ? (
-                <div className="space-y-2">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                    {formState.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedDomainTags.map((tag) => {
-                      const isSelected = formState.tags.includes(tag)
-                      const isDisabled = !isSelected && selectedTagCount >= MAX_PROFILE_TAGS
-
-                      return (
-                        <button
-                          key={tag}
-                          type="button"
-                          aria-pressed={isSelected}
-                          disabled={isDisabled || isSaving}
-                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
-                            isSelected
-                              ? accentTheme.selected
-                              : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-45'
-                          }`}
-                          onClick={() => handleTagToggle(tag)}
-                        >
-                          {isSelected && <FiCheck className="h-4 w-4" aria-hidden="true" />}
-                          {tag}
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              ) : (
-                <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-4 py-5 text-sm text-slate-500">
-                  Sélectionnez d’abord une formation pour afficher les compétences associées.
-                </div>
-              )}
-            </div>
-          </section>
-
           <label className="block space-y-2">
             <span className="text-sm font-medium text-slate-700">
               Présentation
@@ -585,7 +588,7 @@ export default function StudentProfileCreatePage() {
                 }))
               }
               className="min-h-40 w-full rounded-[1.5rem] border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white"
-              placeholder="Présentez votre pratique, vos formats de travail et ce que vous aimez réaliser."
+              placeholder={defaultStudentBio}
               required
             />
           </label>

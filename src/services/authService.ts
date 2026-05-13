@@ -10,6 +10,14 @@ import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { auth } from '@/firebase/auth'
 import { isFirebaseConfigured } from '@/firebase/firebase'
 import { db } from '@/firebase/firestore'
+import {
+  DEFAULT_ORGANISATION_TYPE,
+  inferOrganisationType,
+  isOrganisationType,
+  normaliseOrganisationName,
+  shouldCollectOrganisationName,
+  type OrganisationType,
+} from '@/data/organisationTypes'
 import type { AppSession, SignInInput, SignUpInput, UserRole } from '@/types/auth'
 import {
   getDemoCurrentUserId,
@@ -23,6 +31,7 @@ import {
 
 export interface ClientAccountInput {
   displayName: string
+  organisationType: OrganisationType
   organisation: string
 }
 
@@ -35,11 +44,20 @@ function getRoleLabel(role: UserRole) {
 }
 
 function buildDemoSession(user: DemoStoredUser): AppSession {
+  const organisationType =
+    user.role === 'client'
+      ? isOrganisationType(user.organisationType)
+        ? user.organisationType
+        : inferOrganisationType(user.organisation)
+      : DEFAULT_ORGANISATION_TYPE
+  const organisation = user.role === 'client' ? normaliseOrganisationName(organisationType, user.organisation) : ''
+
   return {
     uid: user.uid,
     email: user.email,
     displayName: user.displayName,
-    organisation: user.organisation ?? '',
+    organisationType,
+    organisation,
     role: user.role,
     hasStudentProfile: Boolean(getDemoStudentProfiles()[user.uid]),
     photoURL: user.photoURL,
@@ -83,7 +101,14 @@ async function resolveFirebaseSession(user: FirebaseUser, fallbackRole?: UserRol
     typeof userData.displayName === 'string' && userData.displayName.trim()
       ? userData.displayName
       : user.displayName?.trim() || getFallbackDisplayName(user.email ?? 'utilisateur@mirost.app')
-  const organisation = typeof userData.organisation === 'string' ? userData.organisation.trim() : ''
+  const rawOrganisation = typeof userData.organisation === 'string' ? userData.organisation.trim() : ''
+  const organisationType =
+    role === 'client'
+      ? isOrganisationType(userData.organisationType)
+        ? userData.organisationType
+        : inferOrganisationType(rawOrganisation)
+      : DEFAULT_ORGANISATION_TYPE
+  const organisation = role === 'client' ? normaliseOrganisationName(organisationType, rawOrganisation) : ''
   const photoURL =
     typeof userData.photoURL === 'string' || userData.photoURL === null ? userData.photoURL : user.photoURL ?? null
   const hasStudentProfile = role === 'student' ? (await getDoc(doc(db, 'studentProfiles', user.uid))).exists() : false
@@ -92,6 +117,7 @@ async function resolveFirebaseSession(user: FirebaseUser, fallbackRole?: UserRol
     uid: user.uid,
     email: user.email ?? '',
     displayName,
+    organisationType,
     organisation,
     role,
     photoURL,
@@ -109,6 +135,7 @@ async function resolveFirebaseSession(user: FirebaseUser, fallbackRole?: UserRol
     uid: user.uid,
     email: user.email ?? '',
     displayName,
+    organisationType,
     organisation,
     role,
     hasStudentProfile,
@@ -160,7 +187,16 @@ export function subscribeToAuthChanges(onChange: (session: AppSession | null) =>
 export async function signUpWithEmail(input: SignUpInput): Promise<AppSession> {
   const email = input.email.trim().toLowerCase()
   const displayName = input.displayName.trim() || getFallbackDisplayName(email)
-  const organisation = input.role === 'client' ? input.organisation?.trim() ?? '' : ''
+  const organisationType =
+    input.role === 'client' && isOrganisationType(input.organisationType)
+      ? input.organisationType
+      : DEFAULT_ORGANISATION_TYPE
+  const organisation =
+    input.role === 'client' ? normaliseOrganisationName(organisationType, input.organisation) : ''
+
+  if (input.role === 'client' && shouldCollectOrganisationName(organisationType) && !organisation) {
+    throw new Error('Renseignez le nom de l’organisation.')
+  }
 
   if (isFirebaseConfigured) {
     try {
@@ -171,6 +207,7 @@ export async function signUpWithEmail(input: SignUpInput): Promise<AppSession> {
         uid: credential.user.uid,
         email: credential.user.email ?? email,
         displayName,
+        organisationType,
         organisation,
         role: input.role,
         hasStudentProfile: false,
@@ -184,6 +221,7 @@ export async function signUpWithEmail(input: SignUpInput): Promise<AppSession> {
           uid: session.uid,
           email: session.email,
           displayName: session.displayName,
+          organisationType: session.organisationType,
           organisation: session.organisation,
           role: session.role,
           photoURL: session.photoURL,
@@ -211,6 +249,7 @@ export async function signUpWithEmail(input: SignUpInput): Promise<AppSession> {
     email,
     password: input.password,
     displayName,
+    organisationType,
     organisation,
     role: input.role,
     photoURL: null,
@@ -271,10 +310,19 @@ export async function updateClientAccount(session: AppSession, input: ClientAcco
   }
 
   const displayName = input.displayName.trim() || getFallbackDisplayName(session.email)
-  const organisation = input.organisation.trim()
+  const organisationType = isOrganisationType(input.organisationType)
+    ? input.organisationType
+    : inferOrganisationType(input.organisation)
+  const organisation = normaliseOrganisationName(organisationType, input.organisation)
+
+  if (shouldCollectOrganisationName(organisationType) && !organisation) {
+    throw new Error('Renseignez le nom de l’organisation.')
+  }
+
   const updatedSession: AppSession = {
     ...session,
     displayName,
+    organisationType,
     organisation,
   }
 
@@ -287,6 +335,7 @@ export async function updateClientAccount(session: AppSession, input: ClientAcco
       doc(db, 'users', session.uid),
       {
         displayName,
+        organisationType,
         organisation,
         updatedAt: serverTimestamp(),
       },
@@ -302,6 +351,7 @@ export async function updateClientAccount(session: AppSession, input: ClientAcco
         ? {
             ...user,
             displayName,
+            organisationType,
             organisation,
           }
         : user

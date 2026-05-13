@@ -5,15 +5,23 @@ import { updateClientAccount } from '@/services/authService'
 import { listSentProfileContactRequests, type ProfileContactRequest } from '@/services/contactService'
 import { useAuthStore } from '@/stores/useAuthStore'
 import RequiredMark from '@/components/RequiredMark'
+import {
+  DEFAULT_ORGANISATION_TYPE,
+  ORGANISATION_TYPE_OPTIONS,
+  shouldCollectOrganisationName,
+  type OrganisationType,
+} from '@/data/organisationTypes'
 import { getRoleAccentTheme } from '@/utils/roleTheme'
 
 interface ClientFormState {
   displayName: string
+  organisationType: OrganisationType
   organisation: string
 }
 
 const emptyClientFormState: ClientFormState = {
   displayName: '',
+  organisationType: DEFAULT_ORGANISATION_TYPE,
   organisation: '',
 }
 
@@ -86,6 +94,7 @@ export default function AccountPage() {
 
     setClientFormState({
       displayName: session.displayName,
+      organisationType: session.organisationType,
       organisation: session.organisation,
     })
   }, [session])
@@ -203,21 +212,56 @@ export default function AccountPage() {
               </label>
 
               <label className="block space-y-2">
-                <span className="text-sm font-medium text-slate-700">Organisation</span>
-                <input
-                  type="text"
-                  value={clientFormState.organisation}
+                <span className="text-sm font-medium text-slate-700">
+                  Type d’organisation
+                  <RequiredMark />
+                </span>
+                <select
+                  value={clientFormState.organisationType}
                   onChange={(event) => {
+                    const organisationType = event.target.value as OrganisationType
                     setClientSaveMessage('')
                     setClientSaveError('')
-                    setClientFormState((current) => ({ ...current, organisation: event.target.value }))
+                    setClientFormState((current) => ({
+                      ...current,
+                      organisationType,
+                      organisation: shouldCollectOrganisationName(organisationType) ? current.organisation : '',
+                    }))
                   }}
                   className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400"
-                  placeholder="Entreprise, association, particulier..."
-                  autoComplete="organization"
                   disabled={isSavingClient}
-                />
+                  required
+                >
+                  {ORGANISATION_TYPE_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </label>
+
+              {shouldCollectOrganisationName(clientFormState.organisationType) && (
+                <label className="block space-y-2">
+                  <span className="text-sm font-medium text-slate-700">
+                    Nom de l’organisation
+                    <RequiredMark />
+                  </span>
+                  <input
+                    type="text"
+                    value={clientFormState.organisation}
+                    onChange={(event) => {
+                      setClientSaveMessage('')
+                      setClientSaveError('')
+                      setClientFormState((current) => ({ ...current, organisation: event.target.value }))
+                    }}
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400"
+                    placeholder="Exemple : Studio Nova"
+                    autoComplete="organization"
+                    disabled={isSavingClient}
+                    required
+                  />
+                </label>
+              )}
 
               <label className="block space-y-2">
                 <span className="text-sm font-medium text-slate-700">Email</span>
