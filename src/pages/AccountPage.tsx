@@ -5,6 +5,7 @@ import { updateClientAccount } from '@/services/authService'
 import { listSentProfileContactRequests, type ProfileContactRequest } from '@/services/contactService'
 import { useAuthStore } from '@/stores/useAuthStore'
 import RequiredMark from '@/components/RequiredMark'
+import { getRoleAccentTheme } from '@/utils/roleTheme'
 
 interface ClientFormState {
   displayName: string
@@ -45,6 +46,7 @@ export default function AccountPage() {
   const [contactsError, setContactsError] = useState('')
   const [isLoadingContacts, setIsLoadingContacts] = useState(false)
   const isClientSession = session?.role === 'client'
+  const accentTheme = getRoleAccentTheme(session?.role)
 
   const contactCountLabel = useMemo(() => {
     if (sentContacts.length === 0) {
@@ -130,8 +132,8 @@ export default function AccountPage() {
 
   return (
     <main className="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
-      <section className="rounded-[2rem] bg-gradient-to-br from-slate-950 via-slate-800 to-amber-500 p-8 text-white shadow-xl">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-amber-100">Mon espace</p>
+      <section className={`rounded-[2rem] bg-gradient-to-br p-8 text-white shadow-xl ${accentTheme.heroGradient}`}>
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/75">Mon espace</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight">
           {session.role === 'student' ? 'Gérer mon profil' : 'Votre espace entreprise'}
         </h1>
@@ -152,7 +154,7 @@ export default function AccountPage() {
 
             <Link
               to="/profiles/create"
-              className="mt-8 inline-flex rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+              className={`mt-8 inline-flex rounded-full px-5 py-3 text-sm font-medium transition ${accentTheme.button}`}
             >
               Modifier mon profil
             </Link>
@@ -241,7 +243,7 @@ export default function AccountPage() {
 
               <button
                 type="submit"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+                className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-70 ${accentTheme.button}`}
                 disabled={isSavingClient}
               >
                 <FiSave className="h-4 w-4" aria-hidden="true" />

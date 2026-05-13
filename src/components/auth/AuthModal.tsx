@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import RequiredMark from '@/components/RequiredMark'
 import { signInWithEmail, signUpWithEmail } from '@/services/authService'
 import { useAuthStore } from '@/stores/useAuthStore'
+import { getRoleAccentTheme, roleAccentThemes } from '@/utils/roleTheme'
 
 interface AuthFormState {
   displayName: string
@@ -29,6 +30,7 @@ export default function AuthModal() {
   const [formState, setFormState] = useState<AuthFormState>(initialFormState)
   const [errorMessage, setErrorMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const accentTheme = getRoleAccentTheme(authModal.role)
 
   const roleCopy =
     authModal.role === 'student'
@@ -122,9 +124,10 @@ export default function AuthModal() {
         className="w-full max-w-2xl rounded-[2rem] border border-slate-200 bg-white p-6 shadow-2xl sm:p-8"
         onClick={(event) => event.stopPropagation()}
       >
+        <div className={`mb-6 h-2 rounded-full bg-gradient-to-r ${accentTheme.heroGradient}`} />
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-3">
-            <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">
+            <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${accentTheme.badge}`}>
               {roleCopy.badge}
             </span>
             <div>
@@ -149,7 +152,7 @@ export default function AuthModal() {
             <button
               type="button"
               className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                authModal.role === 'student' ? 'bg-slate-950 text-white' : 'text-slate-600'
+                authModal.role === 'student' ? roleAccentThemes.student.selected : 'text-slate-600'
               }`}
               onClick={() => setAuthRole('student')}
             >
@@ -158,7 +161,7 @@ export default function AuthModal() {
             <button
               type="button"
               className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                authModal.role === 'client' ? 'bg-slate-950 text-white' : 'text-slate-600'
+                authModal.role === 'client' ? roleAccentThemes.client.selected : 'text-slate-600'
               }`}
               onClick={() => setAuthRole('client')}
             >
@@ -285,7 +288,7 @@ export default function AuthModal() {
             </p>
             <button
               type="submit"
-              className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+              className={`rounded-full px-5 py-3 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-70 ${accentTheme.button}`}
               disabled={isSubmitting}
             >
               {isSubmitting

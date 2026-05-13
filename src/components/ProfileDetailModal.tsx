@@ -22,6 +22,7 @@ import { useAuthStore } from '@/stores/useAuthStore'
 import type { AppSession } from '@/types/auth'
 import type { Profile } from '@/types/profile'
 import { formatFileSize } from '@/utils/formatFileSize'
+import { getRoleAccentTheme } from '@/utils/roleTheme'
 import ProfileDomainBadge from './ProfileDomainBadge'
 import RequiredMark from './RequiredMark'
 import Tags from './Tags'
@@ -93,6 +94,9 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
   const [isSubmittingContact, setIsSubmittingContact] = useState(false)
   const isClientSession = session?.role === 'client'
   const shouldShowContactSection = session?.role !== 'student'
+  const clientAccentTheme = getRoleAccentTheme('client')
+  const contactAccentTheme = isClientSession ? clientAccentTheme : getRoleAccentTheme('guest')
+  const studentAccentTheme = getRoleAccentTheme('student')
 
   useEffect(() => {
     if (!profile) {
@@ -216,13 +220,13 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                 className="h-20 w-20 shrink-0 rounded-[1.5rem] object-cover"
               />
             ) : (
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] bg-slate-950 text-xl font-semibold text-white">
+              <div className={`flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] text-xl font-semibold ${studentAccentTheme.selected}`}>
                 {initials}
               </div>
             )}
 
             <div className="min-w-0">
-              <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">
+              <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${studentAccentTheme.badge}`}>
                 Profil étudiant
               </span>
               <h2 id="profile-detail-title" className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
@@ -439,7 +443,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
               {isClientSession ? (
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+                  className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition ${clientAccentTheme.button}`}
                   onClick={handleContactFormOpen}
                 >
                   <FiMail className="h-4 w-4" aria-hidden="true" />
@@ -448,7 +452,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
               ) : (
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+                  className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition ${contactAccentTheme.button}`}
                   onClick={handleCreateClientAccount}
                 >
                   Créer un compte
@@ -568,7 +572,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                   </button>
                   <button
                     type="submit"
-                    className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+                    className={`rounded-full px-5 py-3 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-70 ${clientAccentTheme.button}`}
                     disabled={isSubmittingContact}
                   >
                     {isSubmittingContact ? 'Envoi en cours...' : 'Envoyer la demande'}

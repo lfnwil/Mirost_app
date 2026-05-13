@@ -35,6 +35,7 @@ import {
   type ProfileLink,
 } from '@/types/profile'
 import { formatFileSize } from '@/utils/formatFileSize'
+import { getRoleAccentTheme } from '@/utils/roleTheme'
 
 interface StudentProfileFormState {
   title: string
@@ -132,6 +133,7 @@ export default function StudentProfileCreatePage() {
   const [isSaving, setIsSaving] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const localPreviewUrlsRef = useRef<Set<string>>(new Set())
+  const accentTheme = getRoleAccentTheme('student')
 
   useEffect(() => {
     const localPreviewUrls = localPreviewUrlsRef.current
@@ -401,7 +403,7 @@ export default function StudentProfileCreatePage() {
     <main className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
       <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Création du profil étudiant</p>
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-rose-500">Création du profil étudiant</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
             Présentez clairement votre univers créatif
           </h1>
@@ -500,7 +502,7 @@ export default function StudentProfileCreatePage() {
                     aria-pressed={isSelected}
                     className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
                       isSelected
-                        ? 'border-slate-950 bg-slate-950 text-white'
+                        ? accentTheme.selected
                         : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100'
                     }`}
                     onClick={() => handleAvailabilityToggle(availability)}
@@ -549,7 +551,7 @@ export default function StudentProfileCreatePage() {
                           disabled={isDisabled || isSaving}
                           className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
                             isSelected
-                              ? 'border-slate-950 bg-slate-950 text-white'
+                              ? accentTheme.selected
                               : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-45'
                           }`}
                           onClick={() => handleTagToggle(tag)}
@@ -633,7 +635,7 @@ export default function StudentProfileCreatePage() {
               <label
                 className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
                   remainingAttachmentSlots > 0 && !isSaving
-                    ? 'cursor-pointer bg-slate-950 text-white hover:bg-slate-800'
+                    ? `cursor-pointer ${accentTheme.button}`
                     : 'cursor-not-allowed bg-slate-200 text-slate-500'
                 }`}
               >
@@ -702,7 +704,7 @@ export default function StudentProfileCreatePage() {
             </button>
             <button
               type="submit"
-              className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
+              className={`rounded-full px-5 py-3 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-70 ${accentTheme.button}`}
               disabled={isSaving || isBootstrapping}
             >
               {isSaving ? 'Enregistrement...' : 'Publier mon profil'}

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '@/stores/useAuthStore'
 import type { UserRole } from '@/types/auth'
+import { getRoleAccentTheme } from '@/utils/roleTheme'
 
 interface RoleCard {
   role: UserRole
@@ -39,6 +40,7 @@ const roleCards: RoleCard[] = [
 
 export default function HomePage() {
   const openAuthModal = useAuthStore((state) => state.openAuthModal)
+  const guestAccentTheme = getRoleAccentTheme('guest')
 
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-8 sm:px-6 lg:px-8">
@@ -69,21 +71,21 @@ export default function HomePage() {
         ))}
       </section>
 
-      <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+      <section className={`rounded-[2rem] border p-6 shadow-sm ${guestAccentTheme.panel}`}>
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Compte MIROST</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
+            <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-700">Compte MIROST</p>
+            <h2 className={`mt-2 text-2xl font-semibold tracking-tight ${guestAccentTheme.panelTitle}`}>
               Un seul accès pour créer un compte ou se connecter.
             </h2>
-            <p className="mt-2 text-sm leading-6 text-slate-600">
+            <p className={`mt-2 text-sm leading-6 ${guestAccentTheme.panelText}`}>
               Choisissez ensuite l’espace étudiant ou entreprise directement depuis la fenêtre de connexion.
             </p>
           </div>
 
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+            className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition ${guestAccentTheme.button}`}
             onClick={() => openAuthModal('client', 'signup')}
           >
             Connexion / inscription
@@ -102,7 +104,7 @@ export default function HomePage() {
 
           <Link
             to="/listing"
-            className="inline-flex items-center justify-center rounded-full bg-amber-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-300"
+            className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition ${guestAccentTheme.button}`}
           >
             Explorer le listing
           </Link>

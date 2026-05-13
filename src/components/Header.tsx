@@ -3,11 +3,16 @@ import { FiEdit3, FiLogOut } from 'react-icons/fi'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { signOutCurrentUser } from '@/services/authService'
 import { useAuthStore } from '@/stores/useAuthStore'
+import type { UserRole } from '@/types/auth'
+import { getRoleAccentTheme } from '@/utils/roleTheme'
 
-const navLinkClassName = ({ isActive }: { isActive: boolean }) =>
-  `rounded-full px-3 py-2 text-sm font-medium transition ${
-    isActive ? 'bg-slate-950 text-white' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+const navLinkClassName = ({ isActive }: { isActive: boolean }, role?: UserRole) => {
+  const theme = getRoleAccentTheme(role)
+
+  return `rounded-full px-3 py-2 text-sm font-medium transition ${
+    isActive ? theme.selected : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
   }`
+}
 
 const brandAssetVersion = '20260513-provided-svg'
 const brandIconUrl = `${import.meta.env.BASE_URL}brand/mirost-icon.svg?v=${brandAssetVersion}`
@@ -23,6 +28,7 @@ export default function Header() {
   const displayName = session?.displayName?.trim() || 'Invité'
   const avatarInitial = displayName.charAt(0).toUpperCase()
   const roleLabel = session?.role === 'student' ? 'Étudiant' : 'Entreprise / Particulier'
+  const accentTheme = getRoleAccentTheme(session?.role)
 
   useEffect(() => {
     if (!isProfileMenuOpen) {
@@ -98,11 +104,11 @@ export default function Header() {
 
         <nav className="hidden flex-1 items-center justify-center gap-2 lg:flex">
           {!session && (
-            <NavLink to="/" end className={navLinkClassName}>
+            <NavLink to="/" end className={(props) => navLinkClassName(props)}>
               Accueil
             </NavLink>
           )}
-          <NavLink to="/listing" className={navLinkClassName}>
+          <NavLink to="/listing" className={(props) => navLinkClassName(props, session?.role)}>
             Listing
           </NavLink>
         </nav>
@@ -111,14 +117,14 @@ export default function Header() {
           {!session ? (
             <button
               type="button"
-              className="rounded-full bg-slate-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
+              className={`rounded-full px-4 py-2 text-sm font-medium transition ${accentTheme.button}`}
               onClick={() => openAuthModal('client', 'signup')}
             >
               Connexion / inscription
             </button>
           ) : (
             <>
-              <span className="hidden rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-800 lg:inline-flex">
+              <span className={`hidden rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] lg:inline-flex ${accentTheme.badge}`}>
                 {roleLabel}
               </span>
               <button
@@ -135,7 +141,7 @@ export default function Header() {
                     className="h-10 w-10 rounded-full border border-slate-200 object-cover shadow-sm"
                   />
                 ) : (
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-sm font-semibold text-amber-800 shadow-sm">
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold shadow-sm ${accentTheme.avatar}`}>
                     {avatarInitial}
                   </div>
                 )}
@@ -159,7 +165,7 @@ export default function Header() {
           />
 
           <div className="fixed right-4 top-20 z-40 w-[min(24rem,calc(100vw-2rem))] rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-2xl sm:right-6 lg:right-8">
-            <div className="flex items-center gap-4 rounded-[1.5rem] bg-slate-50 p-4">
+            <div className={`flex items-center gap-4 rounded-[1.5rem] border p-4 ${accentTheme.panel}`}>
               {session.photoURL ? (
                 <img
                   src={session.photoURL}
@@ -167,21 +173,21 @@ export default function Header() {
                   className="h-14 w-14 rounded-full border border-slate-200 object-cover"
                 />
               ) : (
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-base font-semibold text-amber-800">
+                <div className={`flex h-14 w-14 items-center justify-center rounded-full text-base font-semibold ${accentTheme.avatar}`}>
                   {avatarInitial}
                 </div>
               )}
 
               <div className="min-w-0">
                 <p className="truncate text-base font-semibold text-slate-900">{displayName}</p>
-                <p className="mt-1 text-sm text-slate-500">{roleLabel}</p>
+                <p className={`mt-1 text-sm ${accentTheme.panelText}`}>{roleLabel}</p>
               </div>
             </div>
 
             <div className="mt-4 space-y-3">
               <button
                 type="button"
-                className="flex w-full items-center gap-3 rounded-[1.25rem] border border-slate-200 px-4 py-3 text-left text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+                className={`flex w-full items-center gap-3 rounded-[1.25rem] border px-4 py-3 text-left text-sm font-medium transition ${accentTheme.buttonSoft}`}
                 onClick={handleEditProfile}
               >
                 <FiEdit3 className="h-4 w-4 shrink-0" />

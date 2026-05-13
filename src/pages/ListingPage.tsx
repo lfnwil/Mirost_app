@@ -8,6 +8,7 @@ import { getProfileDomainTags, profileDomainOptions } from '@/data/profileDomain
 import { listPublicProfiles } from '@/services/profileService'
 import { useAuthStore } from '@/stores/useAuthStore'
 import type { Profile } from '@/types/profile'
+import { getRoleAccentTheme } from '@/utils/roleTheme'
 
 function normaliseSearchValue(value: string) {
   return value
@@ -29,6 +30,7 @@ export default function ListingPage() {
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
+  const accentTheme = getRoleAccentTheme(session?.role)
 
   const handleProfileSelect = useCallback((profile: Profile) => {
     setSelectedProfile(profile)
@@ -138,13 +140,13 @@ export default function ListingPage() {
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
       {!session && (
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+        <section className={`rounded-[2rem] border p-6 shadow-sm ${accentTheme.panel}`}>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="text-xl font-semibold tracking-tight text-slate-900">
+              <h2 className={`text-xl font-semibold tracking-tight ${accentTheme.panelTitle}`}>
                 Besoin d’un espace personnalisé ?
               </h2>
-              <p className="mt-2 text-sm leading-6 text-slate-600">
+              <p className={`mt-2 text-sm leading-6 ${accentTheme.panelText}`}>
                 Créez un compte ou connectez-vous pour publier un profil étudiant ou contacter un talent.
               </p>
             </div>
@@ -152,7 +154,7 @@ export default function ListingPage() {
             <div className="flex flex-col gap-3 sm:flex-row">
               <button
                 type="button"
-                className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+                className={`rounded-full px-5 py-3 text-sm font-medium transition ${accentTheme.button}`}
                 onClick={() => openAuthModal('client', 'signup')}
               >
                 Connexion / inscription
@@ -163,13 +165,13 @@ export default function ListingPage() {
       )}
 
       {session?.role === 'student' && !session.hasStudentProfile && (
-        <section className="rounded-[2rem] border border-sky-200 bg-sky-50 p-6 shadow-sm">
+        <section className={`rounded-[2rem] border p-6 shadow-sm ${accentTheme.panel}`}>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="text-xl font-semibold tracking-tight text-sky-950">
+              <h2 className={`text-xl font-semibold tracking-tight ${accentTheme.panelTitle}`}>
                 Votre compte étudiant est créé, votre profil reste à compléter.
               </h2>
-              <p className="mt-2 text-sm leading-6 text-sky-900/80">
+              <p className={`mt-2 text-sm leading-6 ${accentTheme.panelText}`}>
                 Vous pouvez continuer à explorer le listing, ou créer maintenant votre profil pour apparaître aux
                 yeux des entreprises et particuliers.
               </p>
@@ -177,7 +179,7 @@ export default function ListingPage() {
 
             <Link
               to="/profiles/create"
-              className="inline-flex items-center justify-center rounded-full bg-sky-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-sky-900"
+              className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium transition ${accentTheme.button}`}
             >
               Créer mon profil
             </Link>
@@ -235,7 +237,7 @@ export default function ListingPage() {
               aria-controls="listing-filters"
               className={`inline-flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
                 isFilterPanelOpen || activeAdvancedFilterCount > 0
-                  ? 'border-slate-950 bg-slate-950 text-white hover:bg-slate-800'
+                  ? accentTheme.selected
                   : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white'
               }`}
               onClick={() => setIsFilterPanelOpen((current) => !current)}
@@ -339,7 +341,7 @@ export default function ListingPage() {
                             aria-pressed={isSelected}
                             className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
                               isSelected
-                                ? 'border-slate-950 bg-slate-950 text-white'
+                                ? accentTheme.selected
                                 : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100'
                             }`}
                             onClick={() => handleSkillFilterToggle(skill)}
@@ -372,7 +374,7 @@ export default function ListingPage() {
                           aria-pressed={isSelected}
                           className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
                             isSelected
-                              ? 'border-slate-950 bg-slate-950 text-white'
+                              ? accentTheme.selected
                               : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100'
                           }`}
                           onClick={() => handleAvailabilityFilterSelect(availability)}

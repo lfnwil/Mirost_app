@@ -1,5 +1,6 @@
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/stores/useAuthStore'
+import { getRoleAccentTheme } from '@/utils/roleTheme'
 
 export default function StudentProfileDecisionPage() {
   const session = useAuthStore((state) => state.session)
@@ -22,10 +23,12 @@ export default function StudentProfileDecisionPage() {
     return <Navigate to="/listing" replace />
   }
 
+  const accentTheme = getRoleAccentTheme('student')
+
   return (
     <main className="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
-      <section className="rounded-[2rem] bg-gradient-to-br from-slate-950 via-slate-800 to-sky-600 p-8 text-white shadow-xl">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-sky-100">Étape suivante</p>
+      <section className={`rounded-[2rem] bg-gradient-to-br p-8 text-white shadow-xl ${accentTheme.heroGradient}`}>
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/75">Étape suivante</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight">Votre compte étudiant est actif.</h1>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-200 sm:text-base">
           Nous n’avons pas encore trouvé de profil public rattaché à votre compte. Créez-le maintenant pour apparaître
@@ -41,7 +44,7 @@ export default function StudentProfileDecisionPage() {
           </p>
           <button
             type="button"
-            className="mt-8 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+            className={`mt-8 rounded-full px-5 py-3 text-sm font-medium transition ${accentTheme.button}`}
             onClick={() => navigate('/profiles/create')}
           >
             Commencer la création
