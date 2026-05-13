@@ -185,9 +185,9 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
     try {
       await submitProfileContactRequest(currentProfile, contactFormState)
       setContactFormState(buildContactFormStateFromSession(session))
-      setContactSuccessMessage('Votre demande de contact a bien ete envoyee.')
+      setContactSuccessMessage('Votre demande de contact a bien été envoyée.')
     } catch (error) {
-      setContactErrorMessage(error instanceof Error ? error.message : 'Impossible d envoyer votre demande pour le moment.')
+      setContactErrorMessage(error instanceof Error ? error.message : 'Impossible d’envoyer votre demande pour le moment.')
     } finally {
       setIsSubmittingContact(false)
     }
@@ -222,7 +222,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
 
             <div className="min-w-0">
               <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">
-                Profil etudiant
+                Profil étudiant
               </span>
               <h2 id="profile-detail-title" className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
                 {profile.name}
@@ -255,7 +255,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
           <div className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
             <FiClock className="h-5 w-5 shrink-0 text-slate-900" aria-hidden="true" />
             <div>
-              <p className="font-medium text-slate-900">Disponibilite</p>
+              <p className="font-medium text-slate-900">Disponibilités</p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {profile.availability.length > 0 ? (
                   profile.availability.map((availability) => (
@@ -267,7 +267,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                     </span>
                   ))
                 ) : (
-                  <p>Disponibilite non renseignee</p>
+                  <p>Disponibilité non renseignée</p>
                 )}
               </div>
             </div>
@@ -301,20 +301,20 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
           )}
 
           <section>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Competences</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Compétences</h3>
             <div className="mt-3">
               <Tags tags={profile.tags} />
             </div>
           </section>
 
           <section>
-            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Presentation</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Présentation</h3>
             <p className="mt-3 text-base leading-7 text-slate-700">{profile.bio}</p>
           </section>
 
           {hasAttachments && (
             <section>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Pieces jointes</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Pièces jointes</h3>
               <div className="mt-3 grid gap-3 sm:grid-cols-3">
                 {profile.attachments.map((attachment) => {
                   const isImage = attachment.contentType.startsWith('image/')
@@ -343,7 +343,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                             controls
                             className="w-full"
                             src={attachment.url}
-                            aria-label={`Ecouter ${attachment.name}`}
+                            aria-label={`Écouter ${attachment.name}`}
                           />
                         </div>
                       </div>
@@ -427,11 +427,11 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
           <section className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h3 className="text-base font-semibold text-slate-900">Vous souhaitez echanger avec ce profil ?</h3>
+                <h3 className="text-base font-semibold text-slate-900">Vous souhaitez échanger avec ce profil ?</h3>
                 <p className="mt-1 text-sm leading-6 text-slate-600">
                   {isClientSession
                     ? 'Envoyez une demande claire avec le contexte de votre projet.'
-                    : 'Creez un compte entreprise pour contacter ce profil.'}
+                    : 'Créez un compte entreprise pour contacter ce profil.'}
                 </p>
               </div>
 
@@ -442,7 +442,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                   onClick={handleContactFormOpen}
                 >
                   <FiMail className="h-4 w-4" aria-hidden="true" />
-                  Contacter cet etudiant
+                  Contacter cet étudiant
                 </button>
               ) : (
                 <button
@@ -450,7 +450,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                   className="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
                   onClick={handleCreateClientAccount}
                 >
-                  Creer un compte
+                  Créer un compte
                 </button>
               )}
             </div>
@@ -521,7 +521,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                       value={contactFormState.projectType}
                       onChange={(event) => handleContactFieldChange('projectType', event.target.value)}
                       className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400"
-                      placeholder="Exemple : shooting, logo, video courte"
+                      placeholder="Exemple : shooting, logo, vidéo courte"
                       disabled={isSubmittingContact}
                       required
                     />
@@ -537,7 +537,7 @@ export default function ProfileDetailModal({ profile, onClose }: ProfileDetailMo
                     value={contactFormState.message}
                     onChange={(event) => handleContactFieldChange('message', event.target.value)}
                     className="min-h-32 w-full rounded-[1.25rem] border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400"
-                    placeholder="Decrivez le besoin, les dates, le format attendu et toute information utile."
+                    placeholder="Décrivez le besoin, les dates, le format attendu et toute information utile."
                     disabled={isSubmittingContact}
                     required
                   />

@@ -53,7 +53,7 @@ export const profileDomainOptions = [
     badgeClassName: 'border-sky-200 bg-sky-50 text-sky-800',
     selectedClassName: 'border-sky-500 bg-sky-600 text-white',
     optionClassName: 'border-sky-200 bg-sky-50 text-sky-900 hover:border-sky-300',
-    tags: ['Video', 'Cadrage video', 'Montage', 'Captation', 'Audiovisuel', 'Motion', 'Animation', 'Storyboard', 'Reels'],
+    tags: ['Vidéo', 'Cadrage vidéo', 'Montage', 'Captation', 'Audiovisuel', 'Motion', 'Animation', 'Storyboard', 'Reels'],
   },
   {
     label: 'Son & Musique',

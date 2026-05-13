@@ -5,7 +5,6 @@ import Profil from '@/components/Profil'
 import ProfileDetailModal from '@/components/ProfileDetailModal'
 import { profileAvailabilities } from '@/data/profileAvailabilities'
 import { getProfileDomainTags, profileDomainOptions } from '@/data/profileDomains'
-import { isFirebaseConfigured } from '@/firebase/firebase'
 import { listPublicProfiles } from '@/services/profileService'
 import { useAuthStore } from '@/stores/useAuthStore'
 import type { Profile } from '@/types/profile'
@@ -138,22 +137,15 @@ export default function ListingPage() {
 
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
-      {!isFirebaseConfigured && (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 shadow-sm">
-          Firebase n est pas configure. Le listing utilise actuellement des donnees de demonstration et les comptes
-          sont stockes localement.
-        </div>
-      )}
-
       {!session && (
         <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="text-xl font-semibold tracking-tight text-slate-900">
-                Besoin d un espace personnalise ?
+                Besoin d’un espace personnalisé ?
               </h2>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                Accedez a la pop-up d authentification, puis choisissez votre espace et le mode connexion ou creation.
+                Créez un compte ou connectez-vous pour publier un profil étudiant ou contacter un talent.
               </p>
             </div>
 
@@ -175,10 +167,10 @@ export default function ListingPage() {
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="text-xl font-semibold tracking-tight text-sky-950">
-                Votre compte etudiant est cree, votre profil reste a completer.
+                Votre compte étudiant est créé, votre profil reste à compléter.
               </h2>
               <p className="mt-2 text-sm leading-6 text-sky-900/80">
-                Vous pouvez continuer a explorer le listing, ou creer maintenant votre profil pour apparaitre aux
+                Vous pouvez continuer à explorer le listing, ou créer maintenant votre profil pour apparaître aux
                 yeux des entreprises et particuliers.
               </p>
             </div>
@@ -187,7 +179,7 @@ export default function ListingPage() {
               to="/profiles/create"
               className="inline-flex items-center justify-center rounded-full bg-sky-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-sky-900"
             >
-              Creer mon profil
+              Créer mon profil
             </Link>
           </div>
         </section>
@@ -203,7 +195,7 @@ export default function ListingPage() {
         <div>
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Profils visibles</p>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
-            Une base de talents creatifs simple a parcourir
+            Une base de talents créatifs simple à parcourir
           </h2>
         </div>
       </section>
@@ -212,7 +204,7 @@ export default function ListingPage() {
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-col gap-3 lg:flex-1 lg:flex-row lg:items-center">
             <label className="relative block flex-1">
-              <span className="sr-only">Recherche par mots-cles</span>
+              <span className="sr-only">Recherche par mots-clés</span>
               <FiSearch
                 className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
                 aria-hidden="true"
@@ -222,7 +214,7 @@ export default function ListingPage() {
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-12 pr-12 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:bg-white"
-                placeholder="Nom, competence, formation..."
+                placeholder="Nom, compétence, formation..."
               />
               {searchQuery && (
                 <button
@@ -269,7 +261,7 @@ export default function ListingPage() {
           </div>
 
           <p className="text-sm font-medium text-slate-500">
-            {filteredProfiles.length} profil{filteredProfiles.length > 1 ? 's' : ''} affiche
+            {filteredProfiles.length} profil{filteredProfiles.length > 1 ? 's' : ''} affiché
             {filteredProfiles.length > 1 ? 's' : ''}
           </p>
         </div>
@@ -291,7 +283,7 @@ export default function ListingPage() {
                     Filtres
                   </h3>
                   <p className="mt-1 text-xs leading-5 text-slate-500">
-                    Choisissez une formation, puis affinez avec ses competences associees.
+                    Choisissez une formation, puis affinez avec les compétences associées.
                   </p>
                 </div>
 
@@ -302,7 +294,7 @@ export default function ListingPage() {
                     onClick={handleClearFilters}
                   >
                     <FiX className="h-4 w-4" aria-hidden="true" />
-                    Reinitialiser
+                    Réinitialiser
                   </button>
                 )}
               </div>
@@ -359,13 +351,13 @@ export default function ListingPage() {
                   </div>
                 ) : (
                   <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-4 text-sm text-slate-500">
-                Selectionnez une formation pour afficher les competences disponibles.
+                    Sélectionnez une formation pour afficher les compétences disponibles.
                   </div>
                 )}
 
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
                   <h4 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                    Disponibilite
+                    Disponibilité
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {profileAvailabilities.map((availability) => {
@@ -407,9 +399,9 @@ export default function ListingPage() {
         </section>
       ) : filteredProfiles.length === 0 ? (
         <section className="rounded-[1.5rem] border border-dashed border-slate-300 bg-white px-6 py-12 text-center shadow-sm">
-          <h2 className="text-xl font-semibold tracking-tight text-slate-900">Aucun profil trouve</h2>
+          <h2 className="text-xl font-semibold tracking-tight text-slate-900">Aucun profil trouvé</h2>
           <p className="mt-2 text-sm text-slate-500">
-            Essayez un autre nom, une autre competence, une autre formation ou une autre disponibilite.
+            Essayez un autre nom, une autre compétence, une autre formation ou une autre disponibilité.
           </p>
         </section>
       ) : (

@@ -26,7 +26,7 @@ function getFallbackDisplayName(email: string) {
 }
 
 function getRoleLabel(role: UserRole) {
-  return role === 'student' ? 'etudiant' : 'entreprise / particulier'
+  return role === 'student' ? 'étudiant' : 'entreprise / particulier'
 }
 
 function buildDemoSession(user: DemoStoredUser): AppSession {
@@ -51,7 +51,7 @@ function mapFirebaseAuthError(error: unknown) {
 
   switch (code) {
     case 'auth/email-already-in-use':
-      return 'Un compte existe deja avec cet email.'
+      return 'Un compte existe déjà avec cet email.'
     case 'auth/invalid-email':
       return 'L email saisi est invalide.'
     case 'auth/invalid-credential':
@@ -198,7 +198,7 @@ export async function signUpWithEmail(input: SignUpInput): Promise<AppSession> {
   const users = getDemoUsers()
 
   if (users.some((user) => user.email.toLowerCase() === email)) {
-    throw new Error('Un compte existe deja avec cet email.')
+    throw new Error('Un compte existe déjà avec cet email.')
   }
 
   const nextUser: DemoStoredUser = {

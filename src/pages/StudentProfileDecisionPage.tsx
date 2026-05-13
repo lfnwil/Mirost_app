@@ -25,34 +25,34 @@ export default function StudentProfileDecisionPage() {
   return (
     <main className="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
       <section className="rounded-[2rem] bg-gradient-to-br from-slate-950 via-slate-800 to-sky-600 p-8 text-white shadow-xl">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-sky-100">Etape suivante</p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight">Votre compte etudiant est actif.</h1>
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-sky-100">Étape suivante</p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight">Votre compte étudiant est actif.</h1>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-200 sm:text-base">
-          Nous n avons pas encore trouve de profil public rattache a votre compte. Souhaitez-vous le creer maintenant
-          pour apparaitre dans le listing MIROST ?
+          Nous n’avons pas encore trouvé de profil public rattaché à votre compte. Créez-le maintenant pour apparaître
+          dans le listing MIROST.
         </p>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
         <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Oui, je cree mon profil</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Créer mon profil</h2>
           <p className="mt-3 text-sm leading-6 text-slate-600">
-            Vous completez votre presentation, vos disciplines creatives, votre disponibilite et votre localisation.
+            Ajoutez votre présentation, votre formation, vos compétences, vos disponibilités et vos créations.
           </p>
           <button
             type="button"
             className="mt-8 rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
             onClick={() => navigate('/profiles/create')}
           >
-            Commencer la creation
+            Commencer la création
           </button>
         </article>
 
         <article className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Non, plus tard</h2>
           <p className="mt-3 text-sm leading-6 text-slate-600">
-            Vous serez redirige vers le listing. Vous pourrez revenir plus tard pour finaliser votre profil depuis
-            l entete ou le bandeau de rappel.
+            Vous serez redirigé vers le listing. Vous pourrez revenir plus tard pour finaliser votre profil depuis
+            votre espace personnel.
           </p>
           <button
             type="button"

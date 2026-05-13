@@ -15,24 +15,24 @@ const roleCards: RoleCard[] = [
     role: 'client',
     title: 'Entreprise / Particulier',
     description:
-      'Accedez rapidement a un vivier de talents creatifs pour des besoins ponctuels, concrets et accessibles.',
+      'Accédez rapidement à des profils étudiants créatifs pour des besoins concrets, ponctuels et accessibles.',
     accentClassName: 'from-sky-500 to-slate-950',
     bullets: [
-      'Consulter librement les profils et portfolios',
-      'Trouver un profil adapte a un besoin simple ou ponctuel',
-      'Entrer en contact dans un cadre rassurant et plus lisible',
+      'Consulter les profils, portfolios et pièces jointes',
+      'Filtrer par formation, compétences et disponibilités',
+      'Contacter un talent dans un cadre clair et structuré',
     ],
   },
   {
     role: 'student',
-    title: 'Etudiant creatif',
+    title: 'Étudiant créatif',
     description:
-      'Creez votre compte, completez votre profil si besoin et rendez votre travail visible sans logique de mise en concurrence opaque.',
+      'Créez votre compte, présentez votre univers et rendez vos créations visibles auprès de structures en recherche de talents.',
     accentClassName: 'from-amber-500 to-rose-500',
     bullets: [
-      'Mettre en valeur votre profil creatif',
-      'Garder une visibilite plus equitable sur la plateforme',
-      'Trouver des missions simples pour enrichir votre parcours',
+      'Mettre en valeur votre formation et vos compétences',
+      'Ajouter jusqu’à trois créations ou références',
+      'Recevoir des demandes de contact qualifiées',
     ],
   },
 ]
@@ -74,10 +74,10 @@ export default function HomePage() {
           <div className="max-w-2xl">
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Compte MIROST</p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
-              Un seul acces pour creer un compte ou se connecter.
+              Un seul accès pour créer un compte ou se connecter.
             </h2>
             <p className="mt-2 text-sm leading-6 text-slate-600">
-              La pop-up vous permet ensuite de choisir votre espace entreprise ou etudiant.
+              Choisissez ensuite l’espace étudiant ou entreprise directement depuis la fenêtre de connexion.
             </p>
           </div>
 
@@ -94,9 +94,9 @@ export default function HomePage() {
       <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Acces libre aux profils</p>
+            <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Accès libre aux profils</p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
-              Vous pouvez deja parcourir le listing sans vous connecter.
+              Parcourez déjà le listing sans vous connecter.
             </h2>
           </div>
 

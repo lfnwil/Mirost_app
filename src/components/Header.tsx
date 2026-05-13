@@ -16,9 +16,9 @@ export default function Header() {
   const [isSigningOut, setIsSigningOut] = useState(false)
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
 
-  const displayName = session?.displayName?.trim() || 'Invite'
+  const displayName = session?.displayName?.trim() || 'Invité'
   const avatarInitial = displayName.charAt(0).toUpperCase()
-  const roleLabel = session?.role === 'student' ? 'Etudiant' : 'Entreprise / Particulier'
+  const roleLabel = session?.role === 'student' ? 'Étudiant' : 'Entreprise / Particulier'
 
   useEffect(() => {
     if (!isProfileMenuOpen) {
@@ -77,7 +77,7 @@ export default function Header() {
           </div>
           <div>
             <p className="text-lg font-semibold tracking-tight text-slate-900">MIROST</p>
-            <p className="text-sm text-slate-500">Talents creatifs, missions courtes</p>
+            <p className="text-sm text-slate-500">Talents créatifs, missions courtes</p>
           </div>
         </Link>
 
@@ -171,11 +171,11 @@ export default function Header() {
               >
                 <FiEdit3 className="h-4 w-4 shrink-0" />
                 <div>
-                  <p>{session.role === 'student' && !session.hasStudentProfile ? 'Completer son profil / portfolio' : 'Modifier son profil / portfolio'}</p>
+                  <p>{session.role === 'student' && !session.hasStudentProfile ? 'Compléter mon profil' : 'Modifier mon profil'}</p>
                   <p className="mt-1 text-xs font-normal text-slate-500">
                     {session.role === 'student'
-                      ? 'Mettre a jour votre carte publique et votre presentation.'
-                      : 'Acceder a votre espace compte cote front.'}
+                      ? 'Mettre à jour votre carte publique, vos créations et vos disponibilités.'
+                      : 'Consulter votre espace entreprise et revenir rapidement aux profils.'}
                   </p>
                 </div>
               </button>
@@ -188,9 +188,9 @@ export default function Header() {
               >
                 <FiLogOut className="h-4 w-4 shrink-0" />
                 <div>
-                  <p>{isSigningOut ? 'Deconnexion...' : 'Se deconnecter'}</p>
+                  <p>{isSigningOut ? 'Déconnexion...' : 'Se déconnecter'}</p>
                   <p className="mt-1 text-xs font-normal text-rose-500">
-                    Fermer votre session et revenir au listing public.
+                    Fermer la session et revenir au listing public.
                   </p>
                 </div>
               </button>

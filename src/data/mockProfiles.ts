@@ -12,7 +12,7 @@ export const mockProfiles: Profile[] = [
     id: "lea-m",
     name: "Lea Martin",
     title: "Création & Digital Design",
-    bio: "Etudiante en design graphique, Lea accompagne des projets culturels et associatifs pour poser une identite visuelle simple, propre et facile a deployer.",
+    bio: "Étudiante en design graphique, Léa accompagne des projets culturels et associatifs pour poser une identité visuelle simple, propre et facile à déployer.",
     tags: ["Design", "Branding", "Identite visuelle"],
     avatarUrl: "https://i.pravatar.cc/120?img=32",
     location: "Paris",
@@ -20,21 +20,21 @@ export const mockProfiles: Profile[] = [
     attachments: [
       {
         id: "lea-identite-visuelle",
-        name: "PJ test - image SVG",
+        name: "Identité visuelle - aperçu",
         url: testAttachmentUrls.image,
         contentType: "image/svg+xml",
         size: 984
       },
       {
         id: "lea-document-pdf",
-        name: "PJ test - document PDF",
+        name: "Dossier de présentation",
         url: testAttachmentUrls.pdf,
         contentType: "application/pdf",
         size: 652
       },
       {
         id: "lea-extrait-mp3",
-        name: "PJ test - extrait MP3",
+        name: "Extrait sonore",
         url: testAttachmentUrls.mp3,
         contentType: "audio/mpeg",
         size: 39868
@@ -62,15 +62,15 @@ export const mockProfiles: Profile[] = [
     id: "yanis-b",
     name: "Yanis Benali",
     title: "AudioVisuel",
-    bio: "Yanis travaille sur des captations, teasers et reels pour des evenements, petites productions et projets musicaux avec une approche rapide et terrain.",
-    tags: ["Video", "Montage", "Audiovisuel"],
+    bio: "Yanis travaille sur des captations, teasers et reels pour des événements, petites productions et projets musicaux avec une approche rapide et terrain.",
+    tags: ["Vidéo", "Montage", "Audiovisuel"],
     avatarUrl: "https://i.pravatar.cc/120?img=12",
     location: "Lyon",
     availability: ["Soirs et week-ends", "Disponible cette semaine"],
     attachments: [
       {
         id: "yanis-teaser",
-        name: "PJ test - video MP4",
+        name: "Teaser vidéo",
         url: testAttachmentUrls.video,
         contentType: "video/mp4",
         size: 1128375
@@ -93,7 +93,7 @@ export const mockProfiles: Profile[] = [
     id: "ines-r",
     name: "Ines Rahmani",
     title: "Marketing & Communication digitale",
-    bio: "Ines construit des contenus pour les reseaux sociaux, des angles editoriaux et des mini-campagnes digitales avec un rendu clair et regulier.",
+    bio: "Inès construit des contenus pour les réseaux sociaux, des angles éditoriaux et des mini-campagnes digitales avec un rendu clair et régulier.",
     tags: ["Social media", "Storytelling", "Contenu court"],
     avatarUrl: "https://i.pravatar.cc/120?img=47",
     location: "Lille",
@@ -101,14 +101,14 @@ export const mockProfiles: Profile[] = [
     attachments: [
       {
         id: "ines-serie-portrait",
-        name: "Serie portrait - selection",
+        name: "Série portrait - sélection",
         url: "https://picsum.photos/seed/mirost-ines/1200/800",
         contentType: "image/jpeg",
         size: 1420000
       },
       {
         id: "ines-coulisses",
-        name: "Coulisses editoriales",
+        name: "Coulisses éditoriales",
         url: "https://picsum.photos/seed/mirost-ines-b/1200/800",
         contentType: "image/jpeg",
         size: 1180000
@@ -135,7 +135,7 @@ export const mockProfiles: Profile[] = [
     tags: ["Son", "Musique", "Podcast"],
     avatarUrl: "https://i.pravatar.cc/120?img=54",
     location: "Nantes",
-    availability: ["A distance uniquement", "Soirs et week-ends"],
+    availability: ["À distance uniquement", "Soirs et week-ends"],
     attachments: [],
     links: [
       {
@@ -154,7 +154,7 @@ export const mockProfiles: Profile[] = [
     id: "maya-d",
     name: "Maya Dufour",
     title: "Création & Digital Design",
-    bio: "Maya cree des visuels sur mesure pour des affiches, stories, mini-campagnes ou supports de mediation culturelle avec une patte claire et expressive.",
+    bio: "Maya crée des visuels sur mesure pour des affiches, stories, mini-campagnes ou supports de médiation culturelle avec une patte claire et expressive.",
     tags: ["Illustration", "Affiche", "Edition"],
     avatarUrl: "https://i.pravatar.cc/120?img=5",
     location: "Bordeaux",
@@ -185,11 +185,11 @@ export const mockProfiles: Profile[] = [
     id: "noe-v",
     name: "Noe Vidal",
     title: "AudioVisuel",
-    bio: "Noe monte et anime des contenus courts pour lancer un evenement, presenter une programmation ou donner une presence plus dynamique a une marque.",
+    bio: "Noé monte et anime des contenus courts pour lancer un événement, présenter une programmation ou donner une présence plus dynamique à une marque.",
     tags: ["Motion", "Animation", "Reels"],
     avatarUrl: "https://i.pravatar.cc/120?img=68",
     location: "Marseille",
-    availability: ["A partir de la semaine prochaine", "A distance uniquement"],
+    availability: ["À partir de la semaine prochaine", "À distance uniquement"],
     attachments: [
       {
         id: "noe-storyboard",

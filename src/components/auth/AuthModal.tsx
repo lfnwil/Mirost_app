@@ -1,7 +1,6 @@
 import { type FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import RequiredMark from '@/components/RequiredMark'
-import { isFirebaseConfigured } from '@/firebase/firebase'
 import { signInWithEmail, signUpWithEmail } from '@/services/authService'
 import { useAuthStore } from '@/stores/useAuthStore'
 
@@ -34,16 +33,16 @@ export default function AuthModal() {
   const roleCopy =
     authModal.role === 'student'
       ? {
-          badge: 'Parcours etudiant',
-          title: authModal.mode === 'signup' ? 'Creer mon compte etudiant' : 'Connexion etudiant',
+          badge: 'Espace étudiant',
+          title: authModal.mode === 'signup' ? 'Créer mon compte étudiant' : 'Connexion étudiant',
           description:
-            'Connectez-vous ou creez votre compte etudiant. Si votre profil creatif n existe pas encore, MIROST vous proposera de le creer juste apres.',
+            'Créez votre espace, complétez votre profil public et valorisez vos créations auprès des entreprises.',
         }
       : {
-          badge: 'Parcours entreprise / particulier',
-          title: authModal.mode === 'signup' ? 'Creer mon compte client' : 'Connexion client',
+          badge: 'Espace entreprise',
+          title: authModal.mode === 'signup' ? 'Créer mon compte entreprise' : 'Connexion entreprise',
           description:
-            'Connectez-vous ou creez votre compte client pour consulter librement les profils et contacter des talents creatifs selon vos besoins.',
+            'Consultez les profils, repérez les compétences utiles et contactez les étudiants créatifs adaptés à vos besoins.',
         }
 
   useEffect(() => {
@@ -145,12 +144,6 @@ export default function AuthModal() {
           </button>
         </div>
 
-        {!isFirebaseConfigured && (
-          <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-            Firebase n est pas configure pour le moment. Le parcours d authentification fonctionne donc en mode demo local.
-          </div>
-        )}
-
         <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1">
             <button
@@ -160,7 +153,7 @@ export default function AuthModal() {
               }`}
               onClick={() => setAuthRole('student')}
             >
-              Etudiant
+              Étudiant
             </button>
             <button
               type="button"
@@ -181,7 +174,7 @@ export default function AuthModal() {
               }`}
               onClick={() => setAuthMode('signup')}
             >
-              Creer un compte
+              Créer un compte
             </button>
             <button
               type="button"
@@ -273,7 +266,7 @@ export default function AuthModal() {
                   }))
                 }
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white"
-                placeholder="Au moins 6 caracteres"
+                placeholder="Au moins 6 caractères"
                 minLength={6}
                 required
               />
@@ -288,7 +281,7 @@ export default function AuthModal() {
 
           <div className="flex flex-col gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-slate-500">
-              Les profils restent consultables librement. Le compte sert a personnaliser votre parcours.
+              Les profils restent consultables librement. Le compte sert à contacter ou publier un profil.
             </p>
             <button
               type="submit"

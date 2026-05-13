@@ -1,11 +1,11 @@
 export const profileAvailabilities = [
-  'Disponible immediatement',
+  'Disponible immédiatement',
   'Disponible sous 48h',
   'Disponible cette semaine',
   'Soirs et week-ends',
-  'A distance uniquement',
+  'À distance uniquement',
   'Missions courtes',
-  'A partir de la semaine prochaine',
+  'À partir de la semaine prochaine',
   'Indisponible pour le moment',
 ] as const
 
@@ -20,6 +20,10 @@ export function normaliseProfileAvailability(availability: string) {
 
   const lowerAvailability = trimmedAvailability.toLowerCase()
 
+  if (lowerAvailability.includes('immediat') || lowerAvailability.includes('immédiat')) {
+    return 'Disponible immédiatement'
+  }
+
   if (lowerAvailability.includes('48h')) {
     return 'Disponible sous 48h'
   }
@@ -29,7 +33,7 @@ export function normaliseProfileAvailability(availability: string) {
   }
 
   if (lowerAvailability.includes('distance')) {
-    return 'A distance uniquement'
+    return 'À distance uniquement'
   }
 
   if (lowerAvailability.includes('1 a 3') || lowerAvailability.includes('1 a3')) {
@@ -37,7 +41,7 @@ export function normaliseProfileAvailability(availability: string) {
   }
 
   if (lowerAvailability.includes('lundi prochain') || lowerAvailability.includes('semaine prochaine')) {
-    return 'A partir de la semaine prochaine'
+    return 'À partir de la semaine prochaine'
   }
 
   if (lowerAvailability.includes('cette semaine')) {

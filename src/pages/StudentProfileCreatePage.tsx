@@ -206,7 +206,7 @@ export default function StudentProfileCreatePage() {
     id: session.uid,
     name: session.displayName,
     title: formState.title || 'Votre formation',
-    bio: formState.bio || 'Votre presentation apparaitra ici pour rassurer les personnes qui consultent votre profil.',
+    bio: formState.bio || 'Votre présentation apparaîtra ici pour aider les entreprises à comprendre votre univers.',
     tags: previewTags.length > 0 ? previewTags : ['Design', 'Audiovisuel'],
     avatarUrl: session.photoURL,
     location: formState.location || 'Votre ville',
@@ -240,7 +240,7 @@ export default function StudentProfileCreatePage() {
       }
 
       if (current.tags.length >= MAX_PROFILE_TAGS) {
-        setErrorMessage(`Vous pouvez selectionner ${MAX_PROFILE_TAGS} tags maximum.`)
+        setErrorMessage(`Vous pouvez sélectionner ${MAX_PROFILE_TAGS} tags maximum.`)
         return current
       }
 
@@ -283,7 +283,7 @@ export default function StudentProfileCreatePage() {
     }
 
     if (attachments.length + selectedFiles.length > MAX_PROFILE_ATTACHMENTS) {
-      setErrorMessage(`Vous pouvez ajouter ${MAX_PROFILE_ATTACHMENTS} pieces jointes maximum.`)
+      setErrorMessage(`Vous pouvez ajouter ${MAX_PROFILE_ATTACHMENTS} pièces jointes maximum.`)
       return
     }
 
@@ -338,24 +338,24 @@ export default function StudentProfileCreatePage() {
     const tags = previewTags
 
     if (!formState.title) {
-      setErrorMessage('Selectionnez une formation pour indiquer votre filiere.')
+      setErrorMessage('Sélectionnez une formation pour indiquer votre filière.')
       return
     }
 
     if (tags.length === 0) {
-      setErrorMessage('Ajoutez au moins un tag pour decrire votre pratique creative.')
+      setErrorMessage('Ajoutez au moins une compétence pour décrire votre pratique créative.')
       return
     }
 
     if (normaliseProfileAvailabilities(formState.availability).length === 0) {
-      setErrorMessage('Selectionnez au moins une disponibilite dans la liste.')
+      setErrorMessage('Sélectionnez au moins une disponibilité dans la liste.')
       return
     }
 
     const filledLinkCount = profileLinkOptions.filter((option) => formState.links[option.type].trim()).length
 
     if (filledLinkCount !== profileLinks.length) {
-      setErrorMessage('Verifiez vos liens : ils doivent pointer vers une URL valide.')
+      setErrorMessage('Vérifiez vos liens : ils doivent pointer vers une URL valide.')
       return
     }
 
@@ -391,7 +391,7 @@ export default function StudentProfileCreatePage() {
       updateStudentProfileStatus(true)
       navigate('/listing')
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Impossible d enregistrer votre profil pour le moment.')
+      setErrorMessage(error instanceof Error ? error.message : 'Impossible d’enregistrer votre profil pour le moment.')
     } finally {
       setIsSaving(false)
     }
@@ -401,13 +401,13 @@ export default function StudentProfileCreatePage() {
     <main className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
       <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Creation du profil etudiant</p>
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Création du profil étudiant</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-            Donnez une forme claire a votre profil creatif
+            Présentez clairement votre univers créatif
           </h1>
           <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
-            Cette fiche sera visible dans le listing public. L objectif est de presenter vos disciplines, votre ton
-            de travail et votre disponibilite de facon simple et rassurante.
+            Cette fiche sera visible dans le listing public. Elle permet aux entreprises de comprendre votre formation,
+            vos compétences, vos disponibilités et les créations que vous souhaitez montrer.
           </p>
         </div>
 
@@ -419,7 +419,7 @@ export default function StudentProfileCreatePage() {
                 <RequiredMark />
               </h2>
               <p className="mt-1 text-xs leading-5 text-slate-500">
-                Selectionnez une seule filiere principale pour classer votre profil. Chaque formation garde la meme
+                Sélectionnez une seule filière principale pour classer votre profil. Chaque formation garde la même
                 couleur dans le listing.
               </p>
             </div>
@@ -475,15 +475,15 @@ export default function StudentProfileCreatePage() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <h2 className="text-sm font-semibold text-slate-900">
-                  Disponibilites
+                  Disponibilités
                   <RequiredMark />
                 </h2>
                 <p className="mt-1 text-xs leading-5 text-slate-500">
-                  Selectionnez toutes les disponibilites qui correspondent a votre rythme de travail.
+                  Sélectionnez toutes les disponibilités qui correspondent à votre rythme de travail.
                 </p>
               </div>
               <span className="inline-flex w-fit rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600">
-                {formState.availability.length} selectionnee{formState.availability.length > 1 ? 's' : ''}
+                {formState.availability.length} sélectionnée{formState.availability.length > 1 ? 's' : ''}
               </span>
             </div>
 
@@ -516,15 +516,15 @@ export default function StudentProfileCreatePage() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <h2 className="text-sm font-semibold text-slate-900">
-                  Tags creatifs
+                  Compétences créatives
                   <RequiredMark />
                 </h2>
                 <p className="mt-1 text-xs leading-5 text-slate-500">
-                  Selectionnez les tags depuis la liste commune pour preparer les futurs filtres de recherche.
+                  Sélectionnez les compétences depuis la liste commune pour faciliter la recherche côté entreprise.
                 </p>
               </div>
               <span className="inline-flex w-fit rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600">
-                {selectedTagCount}/{MAX_PROFILE_TAGS} selectionnes
+                {selectedTagCount}/{MAX_PROFILE_TAGS} sélectionnées
               </span>
             </div>
 
@@ -561,7 +561,7 @@ export default function StudentProfileCreatePage() {
                 </div>
               ) : (
                 <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-4 py-5 text-sm text-slate-500">
-                  Selectionnez d abord une formation pour afficher les competences associees.
+                  Sélectionnez d’abord une formation pour afficher les compétences associées.
                 </div>
               )}
             </div>
@@ -569,7 +569,7 @@ export default function StudentProfileCreatePage() {
 
           <label className="block space-y-2">
             <span className="text-sm font-medium text-slate-700">
-              Presentation
+              Présentation
               <RequiredMark />
             </span>
             <textarea
@@ -581,7 +581,7 @@ export default function StudentProfileCreatePage() {
                 }))
               }
               className="min-h-40 w-full rounded-[1.5rem] border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white"
-              placeholder="Parlez de votre pratique, de vos formats de travail et de ce que vous aimez realiser."
+              placeholder="Présentez votre pratique, vos formats de travail et ce que vous aimez réaliser."
               required
             />
           </label>
@@ -622,9 +622,9 @@ export default function StudentProfileCreatePage() {
           <section className="space-y-3 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <h2 className="text-sm font-semibold text-slate-900">Pieces jointes</h2>
+                <h2 className="text-sm font-semibold text-slate-900">Pièces jointes</h2>
                 <p className="mt-1 text-xs leading-5 text-slate-500">
-                  Ajoutez jusqu a {MAX_PROFILE_ATTACHMENTS} images, videos, PDF ou MP3 pour montrer vos creations.
+                  Ajoutez jusqu’à {MAX_PROFILE_ATTACHMENTS} images, vidéos, PDF ou MP3 pour montrer vos créations.
                 </p>
               </div>
 
@@ -679,7 +679,7 @@ export default function StudentProfileCreatePage() {
               </ul>
             ) : (
               <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-4 py-5 text-sm text-slate-500">
-                Aucune piece jointe ajoutee pour le moment.
+                Aucune pièce jointe ajoutée pour le moment.
               </div>
             )}
           </section>
@@ -711,10 +711,10 @@ export default function StudentProfileCreatePage() {
 
       <aside className="space-y-5">
         <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Apercu live</p>
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Aperçu en direct</p>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">Voici le rendu de votre carte</h2>
           <p className="mt-3 text-sm leading-6 text-slate-600">
-            L apercu vous aide a garder une fiche claire, concise et facile a parcourir pour les entreprises et
+            L’aperçu vous aide à garder une fiche claire, concise et facile à parcourir pour les entreprises et
             particuliers.
           </p>
         </section>

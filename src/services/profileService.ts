@@ -195,11 +195,11 @@ function readFileAsDataUrl(file: File) {
       if (typeof reader.result === 'string') {
         resolve(reader.result)
       } else {
-        reject(new Error('Impossible de lire cette piece jointe.'))
+        reject(new Error('Impossible de lire cette pièce jointe.'))
       }
     }
 
-    reader.onerror = () => reject(new Error('Impossible de lire cette piece jointe.'))
+    reader.onerror = () => reject(new Error('Impossible de lire cette pièce jointe.'))
     reader.readAsDataURL(file)
   })
 }
@@ -209,11 +209,11 @@ export function validateProfileAttachmentFile(file: File) {
     file.type.startsWith('image/') || file.type.startsWith('video/') || file.type === 'application/pdf' || isMp3File(file)
 
   if (!isSupportedType) {
-    return 'Ajoutez uniquement des images, des videos, des fichiers PDF ou MP3.'
+    return 'Ajoutez uniquement des images, des vidéos, des fichiers PDF ou MP3.'
   }
 
   if (file.size > MAX_PROFILE_ATTACHMENT_SIZE_BYTES) {
-    return 'Chaque piece jointe doit faire 8 Mo maximum.'
+    return 'Chaque pièce jointe doit faire 8 Mo maximum.'
   }
 
   return ''
